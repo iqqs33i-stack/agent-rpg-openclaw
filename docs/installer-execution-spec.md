@@ -175,7 +175,7 @@ Example:
   "status": "ok",
   "integration_id": "agent-rpg",
   "pack_repo": "https://github.com/iqqs33i-stack/agent-rpg-openclaw",
-  "pack_ref": "v0.1.0",
+  "pack_ref": "5bb2533bff1325d922b2fa7cb430b70ab88f7c73",
   "restart_required": false,
   "effective_endpoint": "http://127.0.0.1:18789/v1/responses",
   "agent_id": "agent-rpg-main",
@@ -204,7 +204,7 @@ Example:
   "status": "error",
   "integration_id": "agent-rpg",
   "pack_repo": "https://github.com/iqqs33i-stack/agent-rpg-openclaw",
-  "pack_ref": "v0.1.0",
+  "pack_ref": "5bb2533bff1325d922b2fa7cb430b70ab88f7c73",
   "restart_required": false,
   "error": {
     "phase": "preflight",
@@ -231,7 +231,7 @@ Example:
   "status": "rolled_back",
   "integration_id": "agent-rpg",
   "pack_repo": "https://github.com/iqqs33i-stack/agent-rpg-openclaw",
-  "pack_ref": "v0.1.0",
+  "pack_ref": "5bb2533bff1325d922b2fa7cb430b70ab88f7c73",
   "restart_required": false,
   "error": {
     "phase": "verify",
