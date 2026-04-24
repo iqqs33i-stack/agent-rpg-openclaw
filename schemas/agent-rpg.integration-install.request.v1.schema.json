@@ -1,0 +1,335 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/iqqs33i-stack/agent-rpg-openclaw/schemas/agent-rpg.integration-install.request.v1.schema.json",
+  "title": "agent-rpg OpenClaw Integration Install Request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "spec_version",
+    "generated_at",
+    "operation",
+    "integration",
+    "client",
+    "gateway",
+    "agent",
+    "contract",
+    "security",
+    "safety_contract"
+  ],
+  "properties": {
+    "spec_version": {
+      "const": "agent-rpg.openclaw.integration-install/v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "owner",
+        "execution_model",
+        "preferred_mutation_path"
+      ],
+      "properties": {
+        "kind": {
+          "const": "install_or_update_integration"
+        },
+        "owner": {
+          "const": "openclaw"
+        },
+        "execution_model": {
+          "const": "openclaw-safe-managed-install"
+        },
+        "preferred_mutation_path": {
+          "const": "cli-first-merge-patch-fallback"
+        }
+      }
+    },
+    "integration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "integration_id",
+        "desired_state",
+        "pack_repo",
+        "pack_ref",
+        "integrity"
+      ],
+      "properties": {
+        "integration_id": {
+          "const": "agent-rpg"
+        },
+        "desired_state": {
+          "const": "installed"
+        },
+        "pack_repo": {
+          "type": "string",
+          "format": "uri"
+        },
+        "pack_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "integrity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ref_policy",
+            "compatible_major",
+            "checksum_sha256"
+          ],
+          "properties": {
+            "ref_policy": {
+              "const": "pinned-tag-or-commit"
+            },
+            "compatible_major": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "checksum_sha256": {
+              "type": "string",
+              "pattern": "^$|^[A-Fa-f0-9]{64}$"
+            }
+          }
+        }
+      }
+    },
+    "client": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "instance_id",
+        "channel",
+        "platform",
+        "locale",
+        "runtime_origin",
+        "runtime_href"
+      ],
+      "properties": {
+        "instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "channel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "platform": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runtime_origin": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runtime_href": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "gateway": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "endpoint_hint",
+        "responses_required",
+        "local_loopback_preferred"
+      ],
+      "properties": {
+        "endpoint_hint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "responses_required": {
+          "type": "boolean"
+        },
+        "local_loopback_preferred": {
+          "type": "boolean"
+        }
+      }
+    },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent_id",
+        "model",
+        "model_override"
+      ],
+      "properties": {
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_override": {
+          "type": "string"
+        }
+      }
+    },
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime_api",
+        "user",
+        "headers",
+        "app_capabilities",
+        "expected_apply_result"
+      ],
+      "properties": {
+        "runtime_api": {
+          "const": "openresponses"
+        },
+        "user": {
+          "type": "string",
+          "minLength": 1
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "required": [
+            "x-openclaw-agent-id"
+          ],
+          "properties": {
+            "x-openclaw-agent-id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "x-openclaw-model": {
+              "type": "string"
+            }
+          }
+        },
+        "app_capabilities": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "client_version",
+            "supported_runtime_apis",
+            "supports_apply_result_import",
+            "supports_failure_result_display",
+            "supports_rollback_result_display",
+            "supports_endpoint_normalization",
+            "supported_client_import_fields"
+          ],
+          "properties": {
+            "client_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "supported_runtime_apis": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "contains": {
+                "const": "openresponses"
+              }
+            },
+            "supports_apply_result_import": {
+              "const": true
+            },
+            "supports_failure_result_display": {
+              "const": true
+            },
+            "supports_rollback_result_display": {
+              "const": true
+            },
+            "supports_endpoint_normalization": {
+              "const": true
+            },
+            "supported_client_import_fields": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "contains": {
+                "const": "endpoint"
+              }
+            }
+          }
+        },
+        "expected_apply_result": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required_fields"
+          ],
+          "properties": {
+            "required_fields": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "security": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preferred_token_mode",
+        "allow_long_lived_client_token",
+        "client_currently_holds_manual_token"
+      ],
+      "properties": {
+        "preferred_token_mode": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allow_long_lived_client_token": {
+          "type": "boolean"
+        },
+        "client_currently_holds_manual_token": {
+          "type": "boolean"
+        }
+      }
+    },
+    "safety_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "require_preflight_validate",
+        "require_post_apply_verify",
+        "forbid_partial_config_apply",
+        "forbid_blind_agents_list_patch"
+      ],
+      "properties": {
+        "require_preflight_validate": {
+          "const": true
+        },
+        "require_post_apply_verify": {
+          "const": true
+        },
+        "forbid_partial_config_apply": {
+          "const": true
+        },
+        "forbid_blind_agents_list_patch": {
+          "const": true
+        }
+      }
+    }
+  }
+}

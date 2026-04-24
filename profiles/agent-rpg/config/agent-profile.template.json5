@@ -1,0 +1,27 @@
+{
+  // Render this template with install-request values before merging it into the
+  // live config. Do not patch agents.list blindly without first merging existing
+  // entries from config.get because arrays are replaced entirely by config.patch.
+  agents: {
+    defaults: {
+      model: {
+        primary: "__MODEL_PRIMARY__",
+      },
+      models: {
+        "__MODEL_PRIMARY__": {
+          alias: "__MODEL_ALIAS__",
+        },
+      },
+    },
+    list: [
+      {
+        id: "__AGENT_ID__",
+        workspace: "__WORKSPACE__",
+        metadata: {
+          integration: "agent-rpg",
+          instanceId: "__INSTANCE_ID__",
+        },
+      },
+    ],
+  },
+}

@@ -1,0 +1,10 @@
+{
+  // Stable defaults that are safe for the agent-rpg integration.
+  agents: {
+    defaults: {
+      model: {
+        primary: "openclaw/default",
+      },
+    },
+  },
+}

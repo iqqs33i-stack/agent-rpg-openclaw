@@ -1,0 +1,12 @@
+{
+  // Safe object-only config fragment for enabling the OpenResponses HTTP endpoint.
+  gateway: {
+    http: {
+      endpoints: {
+        responses: {
+          enabled: true,
+        },
+      },
+    },
+  },
+}

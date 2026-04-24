@@ -1,0 +1,11 @@
+{
+  gateway: {
+    http: {
+      endpoints: {
+        responses: {
+          enabled: true,
+        },
+      },
+    },
+  },
+}

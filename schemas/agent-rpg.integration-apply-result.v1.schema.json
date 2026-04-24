@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/iqqs33i-stack/agent-rpg-openclaw/schemas/agent-rpg.integration-apply-result.v1.schema.json",
+  "title": "agent-rpg OpenClaw Integration Apply Result v1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/successResult"
+    },
+    {
+      "$ref": "#/$defs/errorResult"
+    },
+    {
+      "$ref": "#/$defs/rolledBackResult"
+    }
+  ],
+  "$defs": {
+    "commonResult": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "status",
+        "integration_id",
+        "pack_repo",
+        "pack_ref",
+        "restart_required"
+      ],
+      "properties": {
+        "integration_id": {
+          "const": "agent-rpg"
+        },
+        "pack_repo": {
+          "type": "string",
+          "format": "uri"
+        },
+        "pack_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "restart_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "successResult": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/commonResult"
+        },
+        {
+          "type": "object",
+          "required": [
+            "status",
+            "effective_endpoint",
+            "agent_id",
+            "verification",
+            "client_import"
+          ],
+          "properties": {
+            "status": {
+              "const": "ok"
+            },
+            "effective_endpoint": {
+              "type": "string",
+              "minLength": 1
+            },
+            "agent_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verification": {
+              "$ref": "#/$defs/verification"
+            },
+            "client_import": {
+              "$ref": "#/$defs/clientImport"
+            }
+          }
+        }
+      ]
+    },
+    "errorResult": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/commonResult"
+        },
+        {
+          "type": "object",
+          "required": [
+            "status",
+            "error",
+            "rollback",
+            "next_action"
+          ],
+          "properties": {
+            "status": {
+              "const": "error"
+            },
+            "error": {
+              "$ref": "#/$defs/errorDetail"
+            },
+            "rollback": {
+              "$ref": "#/$defs/rollbackDetail"
+            },
+            "next_action": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verification": {
+              "$ref": "#/$defs/verification"
+            }
+          }
+        }
+      ]
+    },
+    "rolledBackResult": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/commonResult"
+        },
+        {
+          "type": "object",
+          "required": [
+            "status",
+            "error",
+            "rollback",
+            "next_action"
+          ],
+          "properties": {
+            "status": {
+              "const": "rolled_back"
+            },
+            "error": {
+              "$ref": "#/$defs/errorDetail"
+            },
+            "rollback": {
+              "$ref": "#/$defs/rollbackDetail"
+            },
+            "next_action": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verification": {
+              "$ref": "#/$defs/verification"
+            }
+          }
+        }
+      ]
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "required": [
+        "config_validate",
+        "responses_endpoint",
+        "agent_profile"
+      ],
+      "properties": {
+        "config_validate": {
+          "type": "string",
+          "minLength": 1
+        },
+        "responses_endpoint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agent_profile": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "clientImport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "endpoint",
+        "agentId"
+      ],
+      "properties": {
+        "endpoint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "token": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "type": "string"
+        },
+        "modelOverride": {
+          "type": "string"
+        }
+      }
+    },
+    "errorDetail": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "phase",
+        "code",
+        "message"
+      ],
+      "properties": {
+        "phase": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "details": {
+          "type": "string"
+        }
+      }
+    },
+    "rollbackDetail": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "not_needed",
+            "not_started",
+            "attempted",
+            "ok",
+            "failed"
+          ]
+        },
+        "config_restored": {
+          "type": "boolean"
+        },
+        "created_agent_removed": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
